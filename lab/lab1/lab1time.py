@@ -14,6 +14,20 @@ def f3(arr, n):
                     tr.append((arr[i], arr[j], arr[k]))
     return cnt, tr
 
+def average_time(len_arr):
+    times = []
+    for b in range(5):
+        N = [random.randint(-100, 100) for p in range(len_arr)]
+        start_time = time.time()
+        cnt3, arr3 = f3(N, len_arr)
+        end_time = time.time()
+        times.append(end_time-start_time)
+    times.sort()
+    trim_count = int(len(times) * 0.2)
+    if trim_count > 0:
+        times = times[:-trim_count]
+    return sum(times) / len(times)
+
 def main():
     n = int(input("Введите длину массива n: "))
     N = [random.randint(-100, 100) for p in range(n)]
@@ -29,10 +43,24 @@ def main():
     print(f"Время выполнения алгоритма: {end_time - start_time}")
     
 
-    print("Исследование временной сложности алгоритма:")
-    for q in range(10, 500, 10):
-        N = [random.randint(-100, 100) for p in range(q)]
-        cnt3, arr3 = f3(N, q)
+    print("\nИсследование временной сложности алгоритма:")
+    results = []
+    for c in range(20, 301, 20):
+        elapsed_time = average_time(c)
+        results.append([c, elapsed_time])
+    
+    print(f"{'Размер N':<12} {'Время выполнения (сек)'}")
+    print("-" * 35)
+    for row in results:
+        print(f"{row[0]:<12} {row[1]:<20.6f}")
+    
+    csv_filename = "lab1_variant3_results.csv"
+    with open(csv_filename, "w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow(["Size", "Time"])
+        writer.writerows(results)
+    print(f"Результаты сохранены в файл: {csv_filename}")
+
     return 0
 
 if __name__ == "__main__":
