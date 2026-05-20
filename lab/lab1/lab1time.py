@@ -54,7 +54,7 @@ def main():
     for row in results:
         print(f"{row[0]:<12} {row[1]:<20.6f}")
     
-    csv_filename = "lab1_variant3_results.csv"
+    csv_filename = "lab1.csv"
     with open(csv_filename, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file, delimiter=';')
         writer.writerow(["Size", "Time"])
